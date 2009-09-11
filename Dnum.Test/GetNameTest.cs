@@ -1,5 +1,5 @@
 using System;
-using Couchware;
+using Dnum;
 using NUnit.Framework;
 
 namespace Dnum.Test
