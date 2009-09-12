@@ -2,16 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Dnum
 {
     public static class Dnum<E> where E : struct
     {
         /// <summary>
+        /// Converts the constant of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="constant">A constant in the enumeration.</param>
+        /// <param name="format">The output format to use. </param>
+        /// <returns>A string representation of the constant or value.</returns>
+        public static string Format(E constant, string format)
+        {
+            return Enum.Format(typeof(E), constant, format);
+        }
+
+        public static string Format(sbyte value, string format)  { return Enum.Format(typeof(E), value, format); }
+        public static string Format(byte value, string format)   { return Enum.Format(typeof(E), value, format); }
+        public static string Format(char value, string format)   { return Enum.Format(typeof(E), value, format); }
+        public static string Format(short value, string format)  { return Enum.Format(typeof(E), value, format); }
+        public static string Format(ushort value, string format) { return Enum.Format(typeof(E), value, format); }
+        public static string Format(int value, string format)    { return Enum.Format(typeof(E), value, format); }
+        public static string Format(uint value, string format)   { return Enum.Format(typeof(E), value, format); }
+        public static string Format(long value, string format)   { return Enum.Format(typeof(E), value, format); }
+        public static string Format(ulong value, string format)  { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
         /// Retrieves the name of the constant in the enumeration that has the specified value. 
         /// </summary>
-        /// <param name="value">
-        /// The value of a particular enumerated constant in terms of its underlying type. 
+        /// <param name="constant">
+        /// A constant in the enumeration.
         /// </param>
         /// <returns>
         /// A string containing the name of the enumerated constant in enumType whose value is value,
@@ -22,15 +45,15 @@ namespace Dnum
             return Enum.GetName(typeof(E), constant);
         }
 
-        public static string GetName(sbyte value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(byte value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(char value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(short value) { return Enum.GetName(typeof(E), value); }
+        public static string GetName(sbyte value)  { return Enum.GetName(typeof(E), value); }
+        public static string GetName(byte value)   { return Enum.GetName(typeof(E), value); }
+        public static string GetName(char value)   { return Enum.GetName(typeof(E), value); }
+        public static string GetName(short value)  { return Enum.GetName(typeof(E), value); }
         public static string GetName(ushort value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(int value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(uint value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(long value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(ulong value) { return Enum.GetName(typeof(E), value); }
+        public static string GetName(int value)    { return Enum.GetName(typeof(E), value); }
+        public static string GetName(uint value)   { return Enum.GetName(typeof(E), value); }
+        public static string GetName(long value)   { return Enum.GetName(typeof(E), value); }
+        public static string GetName(ulong value)  { return Enum.GetName(typeof(E), value); }
 
         /// <summary>
         /// Retrieves an array of the names of the constants in the enumeration. 
@@ -89,8 +112,8 @@ namespace Dnum
         /// <summary>
         /// Returns an indication whether a constant with a specified value exists in the enumeration. 
         /// </summary>
-        /// <param name="value">
-        /// The value of a constant in the enumeration. 
+        /// <param name="constant">
+        /// A constant in the enumeration. 
         /// </param>
         /// <returns>
         /// True if a constant in the enumeration has a value equal to value; otherwise, false.
@@ -105,15 +128,15 @@ namespace Dnum
             return Enum.IsDefined(typeof(E), name);
         }
 
-        public static bool IsDefined(sbyte value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(byte value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(char value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(short value) { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(sbyte value)  { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(byte value)   { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(char value)   { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(short value)  { return Enum.IsDefined(typeof(E), value); }
         public static bool IsDefined(ushort value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(int value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(uint value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(long value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(ulong value) { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(int value)    { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(uint value)   { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(long value)   { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(ulong value)  { return Enum.IsDefined(typeof(E), value); }
 
         /// <summary>
         /// Converts the string representation of the name or numeric value of one or more 
@@ -209,15 +232,47 @@ namespace Dnum
         /// <returns>
         /// An enumeration object whose value is value.
         /// </returns>				
-        public static E ToConstant(sbyte value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(byte value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(char value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(short value) { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(sbyte value)  { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(byte value)   { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(char value)   { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(short value)  { return (E) Enum.ToObject(typeof(E), value); }
         public static E ToConstant(ushort value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(int value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(uint value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(long value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(ulong value) { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(int value)    { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(uint value)   { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(long value)   { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(ulong value)  { return (E) Enum.ToObject(typeof(E), value); }
+
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="constant">A constant in the enumeration.</param>
+        /// <returns></returns>
+        public static string GetDescription(E constant)
+        {
+            var attribute = constant.GetType()
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            if (attribute.Length != 0)
+                return attribute
+                    .Cast<DescriptionAttribute>()
+                    .First()
+                    .Description;
+
+            return constant.ToString();
+        }
+
+        public static IList<string> GetDescriptions()
+        {
+            return (from c in GetConstants() select GetDescription(c)).ToList();
+        }
+
+        public static bool HasDescription(E constant)
+        {
+            var attribute = constant.GetType()
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            return attribute.Length != 0;
+        }
 
     }
 }

@@ -7,7 +7,7 @@ namespace Dnum.Test
 	[TestFixture()]
 	public class IsDefinedTest
 	{
-		[Flags()]
+		[Flags]
 		public enum Pet
 		{
 			None = 0,

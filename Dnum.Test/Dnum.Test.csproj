@@ -34,6 +34,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetConstantsTest.cs" />
+    <Compile Include="ParseTest.cs" />
+    <Compile Include="FormatTest.cs" />
     <Compile Include="GetValuesTest.cs" />
     <Compile Include="IsDefinedTest.cs" />
     <Compile Include="GetNameTest.cs" />
