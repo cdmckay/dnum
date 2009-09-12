@@ -32,7 +32,13 @@ namespace Dnum.Test
         public void FormatConstantAsHexadecimal()
         {            
             Assert.AreEqual("00000002", Dnum<Color>.Format(Color.Blue, "x"));
-        }		
+        }
+
+        [Test]
+        public void FormatTooLargeIntegralValue()
+        {
+            Assert.That(() => Dnum<Color>.Format(uint.MaxValue, "g"), Throws.TypeOf<ArgumentException>());
+        }
 		
 	}
 }

@@ -1,7 +1,7 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
 
 namespace Dnum
@@ -20,6 +20,12 @@ namespace Dnum
             return Enum.Format(typeof(E), constant, format);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string Format(sbyte value, string format)  { return Enum.Format(typeof(E), value, format); }
         public static string Format(byte value, string format)   { return Enum.Format(typeof(E), value, format); }
         public static string Format(char value, string format)   { return Enum.Format(typeof(E), value, format); }
@@ -28,7 +34,7 @@ namespace Dnum
         public static string Format(int value, string format)    { return Enum.Format(typeof(E), value, format); }
         public static string Format(uint value, string format)   { return Enum.Format(typeof(E), value, format); }
         public static string Format(long value, string format)   { return Enum.Format(typeof(E), value, format); }
-        public static string Format(ulong value, string format)  { return Enum.Format(typeof(E), value, format); }
+        public static string Format(ulong value, string format)  { return Enum.Format(typeof(E), value, format); }        
 
         /// <summary>
         /// Retrieves the name of the constant in the enumeration that has the specified value. 
@@ -45,15 +51,23 @@ namespace Dnum
             return Enum.GetName(typeof(E), constant);
         }
 
-        public static string GetName(sbyte value)  { return Enum.GetName(typeof(E), value); }
-        public static string GetName(byte value)   { return Enum.GetName(typeof(E), value); }
-        public static string GetName(char value)   { return Enum.GetName(typeof(E), value); }
-        public static string GetName(short value)  { return Enum.GetName(typeof(E), value); }
-        public static string GetName(ushort value) { return Enum.GetName(typeof(E), value); }
-        public static string GetName(int value)    { return Enum.GetName(typeof(E), value); }
-        public static string GetName(uint value)   { return Enum.GetName(typeof(E), value); }
-        public static string GetName(long value)   { return Enum.GetName(typeof(E), value); }
-        public static string GetName(ulong value)  { return Enum.GetName(typeof(E), value); }
+        public static string GetName(sbyte value)  { return GetName((object) value); }
+        public static string GetName(byte value)   { return GetName((object) value); }
+        public static string GetName(char value)   { return GetName((object) value); }
+        public static string GetName(short value)  { return GetName((object) value); }
+        public static string GetName(ushort value) { return GetName((object) value); }
+        public static string GetName(int value)    { return GetName((object) value); }
+        public static string GetName(uint value)   { return GetName((object) value); }
+        public static string GetName(long value)   { return GetName((object) value); }
+        public static string GetName(ulong value)  { return GetName((object) value); }
+
+        private static string GetName(object value)
+        {
+            // This code is here to cause an overflow exception to be emitted
+            // if this is a narrowing conversion.
+            Convert.ChangeType(value, GetUnderlyingType());
+            return Enum.GetName(typeof(E), value);
+        }
 
         /// <summary>
         /// Retrieves an array of the names of the constants in the enumeration. 
@@ -128,15 +142,21 @@ namespace Dnum
             return Enum.IsDefined(typeof(E), name);
         }
 
-        public static bool IsDefined(sbyte value)  { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(byte value)   { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(char value)   { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(short value)  { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(ushort value) { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(int value)    { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(uint value)   { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(long value)   { return Enum.IsDefined(typeof(E), value); }
-        public static bool IsDefined(ulong value)  { return Enum.IsDefined(typeof(E), value); }
+        public static bool IsDefined(sbyte value)  { return IsDefined((object) value); }
+        public static bool IsDefined(byte value)   { return IsDefined((object) value); }
+        public static bool IsDefined(char value)   { return IsDefined((object) value); }
+        public static bool IsDefined(short value)  { return IsDefined((object) value); }
+        public static bool IsDefined(ushort value) { return IsDefined((object) value); }
+        public static bool IsDefined(int value)    { return IsDefined((object) value); }
+        public static bool IsDefined(uint value)   { return IsDefined((object) value); }
+        public static bool IsDefined(long value)   { return IsDefined((object) value); }
+        public static bool IsDefined(ulong value)  { return IsDefined((object) value); }
+
+        private static bool IsDefined(object value)
+        {
+            var converted = Convert.ChangeType(value, GetUnderlyingType());
+            return Enum.IsDefined(typeof(E), converted);
+        }
 
         /// <summary>
         /// Converts the string representation of the name or numeric value of one or more 
@@ -180,8 +200,8 @@ namespace Dnum
         /// A string containing the name or value to convert.
         /// </param>
         /// <param name="result">
-        /// When this method returns, result contains the T value equivalent to name or numeric value in name 
-        /// if the conversion succeeded, or default(T) if the conversion failed.
+        /// When this method returns, result contains the E value equivalent to name or numeric value in name 
+        /// if the conversion succeeded, or default(E) if the conversion failed.
         /// </param>
         /// <param name="ignoreCase">
         /// If true, ignore case; otherwise, regard case.
@@ -212,8 +232,8 @@ namespace Dnum
         /// A string containing the name or value to convert.
         /// </param>
         /// <param name="result">
-        /// When this method returns, result contains the T value equivalent to name or numeric value in name 
-        /// if the conversion succeeded, or default(T) if the conversion failed.
+        /// When this method returns, result contains the E value equivalent to name or numeric value in name 
+        /// if the conversion succeeded, or default(E) if the conversion failed.
         /// </param>		
         /// <returns>
         /// True if the name parameter was converted successfully; otherwise, false.
@@ -232,15 +252,23 @@ namespace Dnum
         /// <returns>
         /// An enumeration object whose value is value.
         /// </returns>				
-        public static E ToConstant(sbyte value)  { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(byte value)   { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(char value)   { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(short value)  { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(ushort value) { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(int value)    { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(uint value)   { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(long value)   { return (E) Enum.ToObject(typeof(E), value); }
-        public static E ToConstant(ulong value)  { return (E) Enum.ToObject(typeof(E), value); }
+        public static E ToConstant(sbyte value)  { return ToConstant((object) value); }
+        public static E ToConstant(byte value)   { return ToConstant((object) value); }
+        public static E ToConstant(char value)   { return ToConstant((object) value); }
+        public static E ToConstant(short value)  { return ToConstant((object) value); }
+        public static E ToConstant(ushort value) { return ToConstant((object) value); }
+        public static E ToConstant(int value)    { return ToConstant((object) value); }
+        public static E ToConstant(uint value)   { return ToConstant((object) value); }
+        public static E ToConstant(long value)   { return ToConstant((object) value); }
+        public static E ToConstant(ulong value)  { return ToConstant((object) value); }
+
+        private static E ToConstant(object value)
+        {            
+            // This code is here to cause an overflow exception to be emitted
+            // if this is a narrowing conversion.
+            Convert.ChangeType(value, GetUnderlyingType());
+            return (E) Enum.ToObject(typeof(E), value);
+        }
 
         /// <summary>
         /// Retrieves the description of the constant in the enumeration that has the specified value. 
@@ -249,7 +277,9 @@ namespace Dnum
         /// <returns></returns>
         public static string GetDescription(E constant)
         {
-            var attribute = constant.GetType()
+            var attribute = constant
+                .GetType()
+                .GetField(constant.ToString())
                 .GetCustomAttributes(typeof(DescriptionAttribute), false);
 
             if (attribute.Length != 0)
@@ -261,17 +291,65 @@ namespace Dnum
             return constant.ToString();
         }
 
+        public static string GetDescription(sbyte value)  { return GetDescription((object) value); }
+        public static string GetDescription(byte value)   { return GetDescription((object) value); }
+        public static string GetDescription(char value)   { return GetDescription((object) value); }
+        public static string GetDescription(short value)  { return GetDescription((object) value); }
+        public static string GetDescription(ushort value) { return GetDescription((object) value); }
+        public static string GetDescription(int value)    { return GetDescription((object) value); }
+        public static string GetDescription(uint value)   { return GetDescription((object) value); }
+        public static string GetDescription(long value)   { return GetDescription((object) value); }
+        public static string GetDescription(ulong value)  { return GetDescription((object) value); }
+
+        private static string GetDescription(object value)
+        {
+            // This code is here to cause an overflow exception to be emitted
+            // if this is a narrowing conversion.            
+            return GetDescription(ToConstant(value));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static IList<string> GetDescriptions()
         {
             return (from c in GetConstants() select GetDescription(c)).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="constant"></param>
+        /// <returns></returns>
         public static bool HasDescription(E constant)
         {
-            var attribute = constant.GetType()
+            var attribute = constant
+                .GetType()
+                .GetField(constant.ToString())
                 .GetCustomAttributes(typeof(DescriptionAttribute), false);
 
             return attribute.Length != 0;
+        }
+
+        public static bool HasDescription(string name)
+        {
+            return IsDefined(name) ? HasDescription(Parse(name)) : false;                
+        }
+
+        public static bool HasDescription(sbyte value)  { return HasDescription((object) value); }
+        public static bool HasDescription(byte value)   { return HasDescription((object) value); }
+        public static bool HasDescription(char value)   { return HasDescription((object) value); }
+        public static bool HasDescription(short value)  { return HasDescription((object) value); }
+        public static bool HasDescription(ushort value) { return HasDescription((object) value); }
+        public static bool HasDescription(int value)    { return HasDescription((object) value); }
+        public static bool HasDescription(uint value)   { return HasDescription((object) value); }
+        public static bool HasDescription(long value)   { return HasDescription((object) value); }
+        public static bool HasDescription(ulong value)  { return HasDescription((object) value); }
+
+        private static bool HasDescription(object value)
+        {            
+            return IsDefined(value) ? HasDescription(ToConstant(value)) : false;
         }
 
     }

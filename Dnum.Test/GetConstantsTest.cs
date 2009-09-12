@@ -21,15 +21,17 @@ namespace Dnum.Test
 		{
 			var constants = Dnum<Color>.GetConstants();
             Assert.AreEqual( 4, constants.Count() );
+            Assert.AreNotEqual( 0, constants.ToList()[0] );
             Assert.AreEqual( Color.Red, constants.ToList()[0] );
 		}
 
         [Test]
         public void GetConstantsFromUlongEnum()
         {
-            var values = Dnum<PaperSize>.GetValues<ulong>();
+            var values = Dnum<PaperSize>.GetConstants();
             Assert.AreEqual(3, values.Count());
-            Assert.AreEqual(0xFFFFFFFFFFFFFFFF, values.ToList()[2]);
+            Assert.AreNotEqual( 0xFFFFFFFFFFFFFFFF, values.ToList()[2] );
+            Assert.AreEqual( PaperSize.A4, values.ToList()[2] );
         }      
 		
 	}

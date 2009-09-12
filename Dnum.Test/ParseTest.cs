@@ -8,20 +8,26 @@ namespace Dnum.Test
 	[TestFixture]
 	public class ParseTest
 	{
-		[Flags] enum Color { None = 0, Red = 1, Green = 2, Blue = 4 };
+		[Flags] enum Color : byte { None = 0, Red = 1, Green = 2, Blue = 4 };
 
         [Test]
-        public void ParseExistantConstantIntegralValueString()
+        public void ParseExistantIntegralValueString()
         {
             Assert.AreEqual(Color.None, Dnum<Color>.Parse("0"));
             Assert.AreEqual(Color.Green, Dnum<Color>.Parse("2"));
         }
        
 		[Test]
-        public void ParseNonExistantConstantIntegralValueString()
+        public void ParseNonExistantIntegralValueString()
         {
             var color = Dnum<Color>.Parse("8");
             Assert.IsFalse(Dnum<Color>.IsDefined(color));
+        }
+
+        [Test]
+        public void ParseTooLargeIntegralValueString()
+        {
+            Assert.That(() => Dnum<Color>.Parse("256"), Throws.TypeOf<OverflowException>());            
         }
 
         [Test]
@@ -45,9 +51,8 @@ namespace Dnum.Test
 
         [Test]
         public void ParseConstantNameList()
-        {
-            var listStr = "Red, Green";
-            Assert.IsTrue(Dnum<Color>.Parse(listStr).ToString().Contains(","));
+        {            
+            Assert.IsTrue(Dnum<Color>.Parse("Red, Green").ToString().Contains(","));
         }
 
 	}

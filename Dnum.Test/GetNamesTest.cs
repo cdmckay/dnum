@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace Dnum.Test
 {
-	[TestFixture()]
+	[TestFixture]
 	public class GetNamesTest
 	{
 		enum Colors { Red, Green, Blue, Yellow };	   
 		
-		[Test()]
+		[Test]
 		public void GetNamesFromEnum()
 		{
 			var names = Dnum<Colors>.GetNames();

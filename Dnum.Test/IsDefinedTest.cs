@@ -4,11 +4,11 @@ using NUnit.Framework;
 
 namespace Dnum.Test
 {
-	[TestFixture()]
+	[TestFixture]
 	public class IsDefinedTest
 	{
 		[Flags]
-		public enum Pet
+		public enum Pet : byte
 		{
 			None = 0,
 			Dog = 1,
@@ -19,38 +19,44 @@ namespace Dnum.Test
 			Other = 32
 		}			
 		
-		[Test()]
+		[Test]
 		public void IsDefinedWorksForValidIntegralValue()
 		{
 			Assert.IsTrue( Dnum<Pet>.IsDefined(1) );			
 		}
 		
-		[Test()]
+		[Test]
 		public void IsDefinedWorksForInvalidIntegralValue()
 		{
 			Assert.IsFalse( Dnum<Pet>.IsDefined(64) );
 		}
+
+        [Test]
+        public void IsDefinedWorksForTooLargeIntegralValue()
+        {            
+            Assert.That(() => Dnum<Pet>.IsDefined(256), Throws.TypeOf<OverflowException>());
+        }
 		
-		[Test()]
-		public void IsDefinedWorksForStringOfConstantName()
+		[Test]
+		public void IsDefinedWorksForConstantName()
 		{
 			Assert.IsTrue( Dnum<Pet>.IsDefined("Rodent") );
 		}
 		
-		[Test()]
+		[Test]
 		public void IsDefinedWorksForConstant()
 		{
 			Assert.IsTrue( Dnum<Pet>.IsDefined(Pet.Dog) );
 		}
 		
-		[Test()]
+		[Test]
 		public void IsDefinedWorksForOredConstants()
 		{
 			Assert.IsFalse( Dnum<Pet>.IsDefined(Pet.Cat | Pet.Dog) );
 		}
 		
-		[Test()]
-		public void IsDefinedWorksForStringOfUppercasedConstantName()
+		[Test]
+		public void IsDefinedWorksForUppercasedConstantName()
 		{
 			Assert.IsTrue( Dnum<Pet>.IsDefined( "None" ) );
 			Assert.IsFalse( Dnum<Pet>.IsDefined( "NONE" ) );
