@@ -16,6 +16,25 @@ namespace Dnum
 	/// </summary>
     public static class Dnum<E> where E : struct
     {
+    	/// <summary>
+        /// Maps the enum constants to their descriptions.
+        /// </summary>
+        private readonly static IDictionary<E, string> ConstantToDescriptionMap 
+        	= new Dictionary<E, string>();
+        
+        private readonly static IDictionary<string, E> DescriptionToConstantMap
+        	= new Dictionary<string, E>();
+        
+        static Dnum()
+        {
+        	foreach (var constant in GetConstants())
+        	{
+        		var description = GetDescriptionOf(constant);
+        		ConstantToDescriptionMap[constant] = description;
+        		DescriptionToConstantMap[description] = constant;
+        	}
+        }
+    	
         #region Format
 
         /// <summary>
@@ -577,8 +596,29 @@ namespace Dnum
             return (E) Enum.ToObject(typeof(E), value);
         } 
 
-        #endregion
+        #endregion        
+        
+        /// <summary>
+        /// Gets the description of the constant.
+        /// </summary>
+        /// <param name="constant"></param>
+        /// <returns></returns>
+        private static string GetDescriptionOf(E constant)
+        {
+        	 var attribute = constant
+                .GetType()
+                .GetField(constant.ToString())
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
 
+            if (attribute.Length != 0)
+                return attribute
+                    .Cast<DescriptionAttribute>()
+                    .First()
+                    .Description;
+
+            return constant.ToString();
+        }
+        
         #region GetDescription
 
         /// <summary>
@@ -591,18 +631,7 @@ namespace Dnum
         /// </returns>
         public static string GetDescription(E constant)
         {
-            var attribute = constant
-                .GetType()
-                .GetField(constant.ToString())
-                .GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-            if (attribute.Length != 0)
-                return attribute
-                    .Cast<DescriptionAttribute>()
-                    .First()
-                    .Description;
-
-            return constant.ToString();
+        	return ConstantToDescriptionMap[constant];
         }
 
         /// <summary>
@@ -844,6 +873,33 @@ namespace Dnum
         } 
 
         #endregion
+        
+        /// <summary>
+        /// Finds the first constant in the enumeration that has a description
+        /// matching <paramref name="description" />.  If a constant has no description,
+        /// the constant's string value is used as its description.
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="ignoreCase"></param>
+        /// <returns>
+        /// The first constant in the enumeration that has a description
+        /// matching <paramref name="description" />.
+        /// </returns>
+        public static E ParseDescription(string description, bool ignoreCase)
+        {        	        	
+    		var keys = DescriptionToConstantMap.Keys;
+
+    		var comparison = ignoreCase
+        		? StringComparison.CurrentCultureIgnoreCase
+        		: StringComparison.CurrentCulture;        	
+    		
+    		var key = keys.First( desc => desc.Equals(description, comparison) );
+    		
+    		if (key.Count() == 0)
+    			throw new ArgumentException(string.Format("Requested description '{0}' was not found", description));
+    		
+    		return DescriptionToConstantMap[key];
+        }
 
     }
 }

@@ -33,7 +33,7 @@ namespace Dnum.Test
         [Test]
         public void ParseLowerCaseConstantName()
         {            
-            Assert.That(() => Dnum<Color>.Parse("blue"), Throws.TypeOf<ArgumentException>() );            
+            Assert.That(() => Dnum<Color>.Parse("blue"), Throws.TypeOf<ArgumentException>() );                        
         }
 
         [Test]
