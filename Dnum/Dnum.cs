@@ -6,44 +6,121 @@ using System.ComponentModel;
 
 namespace Dnum
 {
+	/// <summary>
+	/// Dnum is a static class for accessing enumeration values much like the built-in .NET class Enum. 
+	/// Unlike Enum, Dnum is generified, eliminating the need for casting. Furthermore, Dnum is 
+	/// type-safe, allowing you catch more errors at compile-time and have fewer surprises at runtime.
+	/// 
+	/// Dnum also transparently supports the <seealso cref="System.ComponentModel.DescriptionAttribute" /> 
+	/// attribute, allowing you to use spaces and other characters in your enumeration constants. 
+	/// </summary>
     public static class Dnum<E> where E : struct
     {
+        #region Format
+
         /// <summary>
         /// Converts the constant of an enumeration to its equivalent string 
         /// representation according to the specified format.
         /// </summary>
         /// <param name="constant">A constant in the enumeration.</param>
-        /// <param name="format">The output format to use. </param>
-        /// <returns>A string representation of the constant or value.</returns>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="constant"/>.</returns>
         public static string Format(E constant, string format)
         {
             return Enum.Format(typeof(E), constant, format);
         }
 
         /// <summary>
-        /// 
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static string Format(sbyte value, string format)  { return Enum.Format(typeof(E), value, format); }
-        public static string Format(byte value, string format)   { return Enum.Format(typeof(E), value, format); }
-        public static string Format(char value, string format)   { return Enum.Format(typeof(E), value, format); }
-        public static string Format(short value, string format)  { return Enum.Format(typeof(E), value, format); }
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(sbyte value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(byte value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(char value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(short value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
         public static string Format(ushort value, string format) { return Enum.Format(typeof(E), value, format); }
-        public static string Format(int value, string format)    { return Enum.Format(typeof(E), value, format); }
-        public static string Format(uint value, string format)   { return Enum.Format(typeof(E), value, format); }
-        public static string Format(long value, string format)   { return Enum.Format(typeof(E), value, format); }
-        public static string Format(ulong value, string format)  { return Enum.Format(typeof(E), value, format); }        
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(int value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(uint value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(long value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        /// <summary>
+        /// Converts the integral value of an enumeration to its equivalent string 
+        /// representation according to the specified format.
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <param name="format">The output format to use.</param>
+        /// <returns>A string representation of the <paramref name="value"/>.</returns>
+        public static string Format(ulong value, string format) { return Enum.Format(typeof(E), value, format); }
+
+        #endregion
+
+        #region GetName
 
         /// <summary>
         /// Retrieves the name of the constant in the enumeration that has the specified value. 
         /// </summary>
-        /// <param name="constant">
-        /// A constant in the enumeration.
-        /// </param>
+        /// <param name="constant">A constant in the enumeration.</param>
         /// <returns>
-        /// A string containing the name of the enumerated constant in enumType whose value is value,
+        /// A string containing the name of the enumerated <paramref name="constant"/>,
         /// or null if no such constant is found.
         /// </returns>
         public static string GetName(E constant)
@@ -51,15 +128,95 @@ namespace Dnum
             return Enum.GetName(typeof(E), constant);
         }
 
-        public static string GetName(sbyte value)  { return GetName((object) value); }
-        public static string GetName(byte value)   { return GetName((object) value); }
-        public static string GetName(char value)   { return GetName((object) value); }
-        public static string GetName(short value)  { return GetName((object) value); }
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(sbyte value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(byte value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(char value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(short value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
         public static string GetName(ushort value) { return GetName((object) value); }
-        public static string GetName(int value)    { return GetName((object) value); }
-        public static string GetName(uint value)   { return GetName((object) value); }
-        public static string GetName(long value)   { return GetName((object) value); }
-        public static string GetName(ulong value)  { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(int value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(uint value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(long value) { return GetName((object) value); }
+
+        /// <summary>
+        /// Retrieves the name of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// A string containing the name corresponding to the intergral <paramref name="value"/>,
+        /// or null if no such constant is found.
+        /// </returns>
+        public static string GetName(ulong value) { return GetName((object) value); }
 
         private static string GetName(object value)
         {
@@ -67,13 +224,15 @@ namespace Dnum
             // if this is a narrowing conversion.
             Convert.ChangeType(value, GetUnderlyingType());
             return Enum.GetName(typeof(E), value);
-        }
+        } 
+
+        #endregion
 
         /// <summary>
-        /// Retrieves an array of the names of the constants in the enumeration. 
+        /// Retrieves a list of the names of the constants in the enumeration. 
         /// </summary>
         /// <returns>
-        /// A string enumerable of the names of the constants in enumType. 
+        /// A string enumerable of the names of the constants in enumeration. 
         /// </returns>
         public static IList<string> GetNames()
         {
@@ -84,7 +243,7 @@ namespace Dnum
         /// Returns the underlying type of the enumeration. 
         /// </summary>
         /// <returns>
-        /// The underlying Type of T.
+        /// The underlying type of the enumeration.
         /// </returns>
         public static Type GetUnderlyingType()
         {
@@ -92,10 +251,10 @@ namespace Dnum
         }
 
         /// <summary>
-        /// Retrieves an array of the values of the constants in the enumeration. 
+        /// Retrieves an enumerable of the integral values of the constants in the enumeration. 
         /// </summary>
         /// <returns>
-        /// An enumerable of the values of the constants in the enumeration. 
+        /// An enumerable of the integral values of the constants in the enumeration. 
         /// The elements of the enumerable are sorted by the binary values of the enumeration constants.
         /// </returns>
         public static IEnumerable<int> GetValues()
@@ -104,10 +263,13 @@ namespace Dnum
         }
 
         /// <summary>
-        /// 
+        /// Retrieves an enumerable of the integral values of the constants in the enumeration. 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The underlying type of the enumeration.</typeparam>
+        /// <returns>
+        /// An enumerable of the integral values of the constants in the enumeration. 
+        /// The elements of the enumerable are sorted by the binary values of the enumeration constants.
+        /// </returns>
         public static IEnumerable<T> GetValues<T>() where T
             : IComparable, IFormattable, IConvertible, IComparable<T>, IEquatable<T>
         {
@@ -115,61 +277,142 @@ namespace Dnum
         }
 
         /// <summary>
-        /// 
+        /// Retrieves an enumerable of the constants in the enumeration. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// An enumerable of the the constants in the enumeration. 
+        /// The elements of the enumerable are sorted by the binary values of the enumeration constants.
+        /// </returns>
         public static IEnumerable<E> GetConstants()
         {
             return Enum.GetValues(typeof(E)).Cast<E>();
         }
 
+        #region IsDefined
+
         /// <summary>
-        /// Returns an indication whether a constant with a specified value exists in the enumeration. 
+        /// Returns an indication whether a constant is defined in the enumeration. 
         /// </summary>
-        /// <param name="constant">
-        /// A constant in the enumeration. 
-        /// </param>
+        /// <param name="constant">A constant.</param>
         /// <returns>
-        /// True if a constant in the enumeration has a value equal to value; otherwise, false.
+        /// True if a constant defined in the enumeration has a value equal to the value 
+        /// of <paramref name="constant"/>; otherwise, false.
         /// </returns>
         public static bool IsDefined(E constant)
         {
             return Enum.IsDefined(typeof(E), constant);
         }
 
+        /// <summary>
+        /// Returns an indication whether a constant name is defined in the enumeration. 
+        /// </summary>
+        /// <param name="name">A constant name.</param>
+        /// <returns>
+        /// True if a constant defined in the enumeration has a name equal to 
+        /// <paramref name="name"/>; otherwise, false.
+        /// </returns>
         public static bool IsDefined(string name)
         {
             return Enum.IsDefined(typeof(E), name);
         }
 
-        public static bool IsDefined(sbyte value)  { return IsDefined((object) value); }
-        public static bool IsDefined(byte value)   { return IsDefined((object) value); }
-        public static bool IsDefined(char value)   { return IsDefined((object) value); }
-        public static bool IsDefined(short value)  { return IsDefined((object) value); }
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(sbyte value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(byte value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(char value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(short value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
         public static bool IsDefined(ushort value) { return IsDefined((object) value); }
-        public static bool IsDefined(int value)    { return IsDefined((object) value); }
-        public static bool IsDefined(uint value)   { return IsDefined((object) value); }
-        public static bool IsDefined(long value)   { return IsDefined((object) value); }
-        public static bool IsDefined(ulong value)  { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(int value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(uint value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(long value) { return IsDefined((object) value); }
+
+        /// <summary>
+        /// Returns an indication whether a constant with a specified value exists in a specified enumeration. 
+        /// </summary>
+        /// <param name="value">An integral value in the enumeration.</param>
+        /// <returns>
+        /// True if a constant in the enumeration has a value equal to <paramref name="value"/>; otherwise, false.
+        /// </returns>
+        public static bool IsDefined(ulong value) { return IsDefined((object) value); }
 
         private static bool IsDefined(object value)
         {
             var converted = Convert.ChangeType(value, GetUnderlyingType());
             return Enum.IsDefined(typeof(E), converted);
-        }
+        } 
+
+        #endregion
 
         /// <summary>
         /// Converts the string representation of the name or numeric value of one or more 
         /// enumerated constants to an equivalent enumerated object. 
         /// </summary>
-        /// <param name="name">
-        /// A string containing the name or value to convert.
-        /// </param>
-        /// <param name="ignoreCase">
-        /// If true, ignore case; otherwise, regard case.
-        /// </param>
+        /// <param name="name">A string containing the name or value to convert.</param>
+        /// <param name="ignoreCase">If true, ignore case; otherwise, regard case.</param>
         /// <returns>
-        /// An object of type T whose value is represented by value.
+        /// A constant whose value is represented by <paramref name="name"/>.
         /// </returns>
         public static E Parse(string name, bool ignoreCase)
         {
@@ -184,7 +427,7 @@ namespace Dnum
         /// A string containing the name or value to convert.
         /// </param>		
         /// <returns>
-        /// An object of type T whose value is represented by value.
+        /// A constant whose value is represented by <paramref name="name"/>.
         /// </returns>
         public static E Parse(string name)
         {
@@ -243,38 +486,109 @@ namespace Dnum
             return Dnum<E>.TryParse(name, out result, false);
         }
 
+        #region ToConstant
+
         /// <summary>
         /// Returns an enumeration constant that matches the given integral value.
         /// </summary>
-        /// <param name="value">
-        /// An integral value.
-        /// </param>
+        /// <param name="value">An integral value.</param>
         /// <returns>
-        /// An enumeration object whose value is value.
+        /// An enumeration object whose value is <paramref name="value"/>.
         /// </returns>				
-        public static E ToConstant(sbyte value)  { return ToConstant((object) value); }
-        public static E ToConstant(byte value)   { return ToConstant((object) value); }
-        public static E ToConstant(char value)   { return ToConstant((object) value); }
-        public static E ToConstant(short value)  { return ToConstant((object) value); }
+        public static E ToConstant(sbyte value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(byte value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(char value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(short value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
         public static E ToConstant(ushort value) { return ToConstant((object) value); }
-        public static E ToConstant(int value)    { return ToConstant((object) value); }
-        public static E ToConstant(uint value)   { return ToConstant((object) value); }
-        public static E ToConstant(long value)   { return ToConstant((object) value); }
-        public static E ToConstant(ulong value)  { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(int value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(uint value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(long value) { return ToConstant((object) value); }
+
+        /// <summary>
+        /// Returns an enumeration constant that matches the given integral value.
+        /// </summary>
+        /// <param name="value">An integral value.</param>
+        /// <returns>
+        /// An enumeration object whose value is <paramref name="value"/>.
+        /// </returns>	
+        public static E ToConstant(ulong value) { return ToConstant((object) value); }
 
         private static E ToConstant(object value)
-        {            
+        {
             // This code is here to cause an overflow exception to be emitted
             // if this is a narrowing conversion.
             Convert.ChangeType(value, GetUnderlyingType());
             return (E) Enum.ToObject(typeof(E), value);
-        }
+        } 
+
+        #endregion
+
+        #region GetDescription
 
         /// <summary>
         /// Retrieves the description of the constant in the enumeration that has the specified value. 
         /// </summary>
         /// <param name="constant">A constant in the enumeration.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns>
         public static string GetDescription(E constant)
         {
             var attribute = constant
@@ -291,37 +605,126 @@ namespace Dnum
             return constant.ToString();
         }
 
-        public static string GetDescription(sbyte value)  { return GetDescription((object) value); }
-        public static string GetDescription(byte value)   { return GetDescription((object) value); }
-        public static string GetDescription(char value)   { return GetDescription((object) value); }
-        public static string GetDescription(short value)  { return GetDescription((object) value); }
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns>        
+        public static string GetDescription(sbyte value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(byte value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(char value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(short value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
         public static string GetDescription(ushort value) { return GetDescription((object) value); }
-        public static string GetDescription(int value)    { return GetDescription((object) value); }
-        public static string GetDescription(uint value)   { return GetDescription((object) value); }
-        public static string GetDescription(long value)   { return GetDescription((object) value); }
-        public static string GetDescription(ulong value)  { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(int value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(uint value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(long value) { return GetDescription((object) value); }
+        
+        /// <summary>
+        /// Retrieves the description of the constant in the enumeration that has the specified value. 
+        /// </summary>
+        /// <param name="value">An integal value of a constant in the enumeration.</param>
+        /// <returns>
+        /// The value of the description attribute or, if none existed, 
+        /// the string value of the constant.
+        /// </returns> 
+        public static string GetDescription(ulong value) { return GetDescription((object) value); }
 
         private static string GetDescription(object value)
         {
             // This code is here to cause an overflow exception to be emitted
             // if this is a narrowing conversion.            
             return GetDescription(ToConstant(value));
-        }
+        } 
+
+        #endregion
 
         /// <summary>
-        /// 
+        /// Retrieves a list of all the descriptions of the constants in the enumeration.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// The elements of the list are sorted by the binary values 
+        /// of the enumeration constants.
+        /// </returns>
         public static IList<string> GetDescriptions()
         {
             return (from c in GetConstants() select GetDescription(c)).ToList();
         }
 
+        #region HasDescription
+
         /// <summary>
-        /// 
+        /// Returns an indication whether a constant in the enumeration has a description.
         /// </summary>
-        /// <param name="constant"></param>
-        /// <returns></returns>
+        /// <param name="constant">A constant in the enumeration.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
         public static bool HasDescription(E constant)
         {
             var attribute = constant
@@ -332,25 +735,115 @@ namespace Dnum
             return attribute.Length != 0;
         }
 
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant name 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="name">A constant name.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
         public static bool HasDescription(string name)
         {
-            return IsDefined(name) ? HasDescription(Parse(name)) : false;                
+            return IsDefined(name) ? HasDescription(Parse(name)) : false;
         }
 
-        public static bool HasDescription(sbyte value)  { return HasDescription((object) value); }
-        public static bool HasDescription(byte value)   { return HasDescription((object) value); }
-        public static bool HasDescription(char value)   { return HasDescription((object) value); }
-        public static bool HasDescription(short value)  { return HasDescription((object) value); }
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(sbyte value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(byte value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(char value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(short value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
         public static bool HasDescription(ushort value) { return HasDescription((object) value); }
-        public static bool HasDescription(int value)    { return HasDescription((object) value); }
-        public static bool HasDescription(uint value)   { return HasDescription((object) value); }
-        public static bool HasDescription(long value)   { return HasDescription((object) value); }
-        public static bool HasDescription(ulong value)  { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(int value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(uint value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(long value) { return HasDescription((object) value); }
+        
+        /// <summary>
+        /// Returns an indication whether a constant corresponding to a constant value 
+        /// in the enumeration has a description.
+        /// </summary>
+        /// <param name="value">A constant integral value.</param>
+        /// <returns>
+        /// True if the constant has a description attribute; false otherwise.
+        /// </returns>
+        public static bool HasDescription(ulong value) { return HasDescription((object) value); }
 
         private static bool HasDescription(object value)
-        {            
+        {
             return IsDefined(value) ? HasDescription(ToConstant(value)) : false;
-        }
+        } 
+
+        #endregion
 
     }
 }
