@@ -11,7 +11,7 @@ namespace Dnum
 	/// Unlike Enum, Dnum is generified, eliminating the need for casting. Furthermore, Dnum is 
 	/// type-safe, allowing you catch more errors at compile-time and have fewer surprises at runtime.
 	/// 
-	/// Dnum also transparently supports the <seealso cref="System.ComponentModel.DescriptionAttribute" /> 
+	/// Dnum also transparently supports the <seealso cref="System.ComponentModel.DescriptionAttribute"/> 
 	/// attribute, allowing you to use spaces and other characters in your enumeration constants. 
 	/// </summary>
     public static class Dnum<E> where E : struct
@@ -450,7 +450,7 @@ namespace Dnum
         /// </returns>
         public static E Parse(string name)
         {
-            return Dnum<E>.Parse(name, false);
+            return Parse(name, false);
         }
 
         /// <summary>
@@ -462,25 +462,26 @@ namespace Dnum
         /// A string containing the name or value to convert.
         /// </param>
         /// <param name="result">
-        /// When this method returns, result contains the E value equivalent to name or numeric value in name 
-        /// if the conversion succeeded, or default(E) if the conversion failed.
+       /// When this method returns, <paramref name="result"/> contains the E value equivalent 
+        /// to name or numeric value in <paramref name="name"/> if the conversion succeeded, 
+        /// or null if the conversion failed.
         /// </param>
         /// <param name="ignoreCase">
         /// If true, ignore case; otherwise, regard case.
         /// </param>
         /// <returns>
-        /// True if the name parameter was converted successfully; otherwise, false.
+        /// True if the <paramref name="name"/> parameter was converted successfully; otherwise, false.
         /// </returns>
-        public static bool TryParse(string name, out E result, bool ignoreCase)
+        public static bool TryParse(string name, out E? result, bool ignoreCase)
         {
             try
             {
-                result = Dnum<E>.Parse(name, ignoreCase);
+                result = Parse(name, ignoreCase);
                 return true;
             }
             catch
             {
-                result = default(E);
+                result = null;
                 return false;
             }
         }
@@ -494,15 +495,16 @@ namespace Dnum
         /// A string containing the name or value to convert.
         /// </param>
         /// <param name="result">
-        /// When this method returns, result contains the E value equivalent to name or numeric value in name 
-        /// if the conversion succeeded, or default(E) if the conversion failed.
+        /// When this method returns, <paramref name="result"/> contains the E value equivalent 
+        /// to name or numeric value in <paramref name="name"/> if the conversion succeeded, 
+        /// or null if the conversion failed.
         /// </param>		
         /// <returns>
-        /// True if the name parameter was converted successfully; otherwise, false.
+        /// True if the <paramref name="name"/> parameter was converted successfully; otherwise, false.
         /// </returns>
-        public static bool TryParse(string name, out E result)
+        public static bool TryParse(string name, out E? result)
         {
-            return Dnum<E>.TryParse(name, out result, false);
+            return TryParse(name, out result, false);
         }
 
         #region ToConstant
@@ -745,145 +747,16 @@ namespace Dnum
             return (from c in GetConstants() select GetDescription(c)).ToList();
         }
 
-        #region HasDescription
-
-        /// <summary>
-        /// Returns an indication whether a constant in the enumeration has a description.
-        /// </summary>
-        /// <param name="constant">A constant in the enumeration.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(E constant)
-        {
-            var attribute = constant
-                .GetType()
-                .GetField(constant.ToString())
-                .GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-            return attribute.Length != 0;
-        }
-
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant name 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="name">A constant name.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(string name)
-        {
-            return IsDefined(name) ? HasDescription(Parse(name)) : false;
-        }
-
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(sbyte value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(byte value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(char value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(short value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(ushort value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(int value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(uint value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(long value) { return HasDescription((object) value); }
-        
-        /// <summary>
-        /// Returns an indication whether a constant corresponding to a constant value 
-        /// in the enumeration has a description.
-        /// </summary>
-        /// <param name="value">A constant integral value.</param>
-        /// <returns>
-        /// True if the constant has a description attribute; false otherwise.
-        /// </returns>
-        public static bool HasDescription(ulong value) { return HasDescription((object) value); }
-
-        private static bool HasDescription(object value)
-        {
-            return IsDefined(value) ? HasDescription(ToConstant(value)) : false;
-        } 
-
-        #endregion
-        
         /// <summary>
         /// Finds the first constant in the enumeration that has a description
-        /// matching <paramref name="description" />.  If a constant has no description,
+        /// matching <paramref name="description"/>.  If a constant has no description,
         /// the constant's string value is used as its description.
         /// </summary>
         /// <param name="description"></param>
         /// <param name="ignoreCase"></param>
         /// <returns>
         /// The first constant in the enumeration that has a description
-        /// matching <paramref name="description" />.
+        /// matching <paramref name="description"/>.
         /// </returns>
         public static E ParseDescription(string description, bool ignoreCase)
         {        	        	
@@ -901,5 +774,57 @@ namespace Dnum
     		return DescriptionToConstantMap[key];
         }
 
+        /// <summary>
+        /// Converts the string representation of the descriptions of an
+        /// enumerated constants to an equivalent enumerated object and returns a value that 
+        /// indicates whether the conversion succeeded. 
+        /// </summary>
+        /// <param name="description">A string containing the description to convert.</param>
+        /// <param name="result">
+        /// When this method returns, <paramref name="result"/> contains the E value equivalent to 
+        /// the description in <paramref name="description"/> if the conversion succeeded, 
+        /// or null if the conversion failed.
+        /// </param>
+        /// <param name="ignoreCase">
+        /// If true, ignore case; otherwise, regard case.
+        /// </param>
+        /// <returns>
+        /// True if the <paramref name="description"/> parameter was converted successfully; 
+        /// otherwise, false.
+        /// </returns>
+        public static bool TryParseDescription(string description, out E? result, bool ignoreCase)
+        {
+            try
+            {
+                result = ParseDescription(description, ignoreCase);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// Converts the string representation of the descriptions of an
+        /// enumerated constants to an equivalent enumerated object and returns a value that 
+        /// indicates whether the conversion succeeded. 
+        /// </summary>
+        /// <param name="description">A string containing the description to convert.</param>
+        /// <param name="result">
+        /// When this method returns, <paramref name="result"/> contains the E value equivalent to 
+        /// the description in <paramref name="description"/> if the conversion succeeded, 
+        /// or null if the conversion failed.
+        /// </param>       
+        /// <returns>
+        /// True if the <paramref name="description"/> parameter was converted successfully; 
+        /// otherwise, false.
+        /// </returns>
+        public static bool TryParseDescription(string description, out E? result)
+        {
+        	return TryParseDescription(description, out result, false);
+        }
+        
     }
 }

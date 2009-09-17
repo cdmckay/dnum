@@ -34,7 +34,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HasDescriptionTest.cs" />
     <Compile Include="GetDescriptionsTest.cs" />
     <Compile Include="GetDescriptionTest.cs" />
     <Compile Include="ToConstantTest.cs" />

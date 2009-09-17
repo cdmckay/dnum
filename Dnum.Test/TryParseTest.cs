@@ -13,61 +13,61 @@ namespace Dnum.Test
         [Test]
         public void ParseExistantIntegralValueString()
         {
-            Color none;
+            Color? none;
             Assert.IsTrue(Dnum<Color>.TryParse("0", out none));
-            Assert.AreEqual(Color.None, none);
+            Assert.AreEqual(Color.None, none.Value);
 
-            Color green;
+            Color? green;
             Assert.IsTrue(Dnum<Color>.TryParse("2", out green));
-            Assert.AreEqual(Color.Green, green);
+            Assert.AreEqual(Color.Green, green.Value);
         }
        
 		[Test]
         public void ParseNonExistantIntegralValueString()
         {
-            Color color;
+            Color? color;
             Assert.IsTrue(Dnum<Color>.TryParse("8", out color));
-            Assert.IsFalse(Dnum<Color>.IsDefined(color));
+            Assert.IsFalse(Dnum<Color>.IsDefined(color.Value));
         }
 
         [Test]
         public void ParseTooLargeIntegralValueString()
         {
-            Color color;
+            Color? color;
             Assert.IsFalse(Dnum<Color>.TryParse("256", out color));
-            Assert.AreEqual(default(Color), color);
+            Assert.IsNull(color);
         }
 
         [Test]
         public void ParseLowerCaseConstantName()
         {
-            Color color;            
+            Color? color;            
             Assert.IsFalse(Dnum<Color>.TryParse("blue", out color));
-            Assert.AreEqual(default(Color), color);
+            Assert.IsNull(color);
         }
 
         [Test]
         public void ParseLowerCaseConstantNameWithIgnoreCase()
         {
-            Color color;
+            Color? color;
             Assert.IsTrue(Dnum<Color>.TryParse("blue", out color, true /* Ignore case */));
-            Assert.AreEqual(Color.Blue, color);
+            Assert.AreEqual(Color.Blue, color.Value);
         }
 
         [Test]
         public void ParseNonExistantConstantName()
         {
-            Color color;
+            Color? color;
             Assert.IsFalse(Dnum<Color>.TryParse("Yellow", out color));
-            Assert.AreEqual(default(Color), color);
+            Assert.IsNull(color);
         }
 
         [Test]
         public void ParseConstantNameList()
         {
-            Color color;
+            Color? color;
             Assert.IsTrue(Dnum<Color>.TryParse("Red, Green", out color));
-            Assert.IsTrue(color.ToString().Contains(","));
+            Assert.IsTrue(color.Value.ToString().Contains(","));
         }
 
 	}
