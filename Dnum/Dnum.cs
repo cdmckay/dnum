@@ -21,9 +21,9 @@ namespace Dnum
 		/// </summary>
 		private readonly static IDictionary<E, string> ConstantToDescriptionMap
 			= new Dictionary<E, string>();
-		
-		private readonly static IDictionary<string, E> DescriptionToConstantMap
-			= new Dictionary<string, E>();
+
+        private readonly static IDictionary<string, IList<E>> DescriptionToConstantsMap
+			= new Dictionary<string, IList<E>>();
 		
 		static Dnum()
 		{
@@ -31,7 +31,10 @@ namespace Dnum
 			{
 				var description = GetDescriptionOf(constant);
 				ConstantToDescriptionMap[constant] = description;
-				DescriptionToConstantMap[description] = constant;
+
+                var map = DescriptionToConstantsMap;
+                if (!map.ContainsKey(description)) map[description] = new List<E>();
+                map[description].Add(constant);                
 			}
 		}
 		
@@ -748,40 +751,67 @@ namespace Dnum
 		}
 
 		/// <summary>
-		/// Finds the first constant in the enumeration that has a description
+		/// Finds all constants in the enumeration that have a description
 		/// matching <paramref name="description"/>.  If a constant has no description,
 		/// the constant's string value is used as its description.
 		/// </summary>
 		/// <param name="description"></param>
 		/// <param name="ignoreCase"></param>
 		/// <returns>
-		/// The first constant in the enumeration that has a description
+		/// The constants in the enumeration that have a description
 		/// matching <paramref name="description"/>.
 		/// </returns>
-		public static E ParseDescription(string description, bool ignoreCase)
-		{
-			var keys = DescriptionToConstantMap.Keys;
+		public static IEnumerable<E> ParseDescription(string description, bool ignoreCase)
+		{						
+            var message = "Requested value '{0}' was not found.";
+            
+            if (ignoreCase)
+            {
+                var map = ConstantToDescriptionMap;
+                var comparison = StringComparison.CurrentCultureIgnoreCase;
+                var constants = from k in ConstantToDescriptionMap.Keys
+                                where map[k].Equals(description, comparison)
+                                select k;
 
-			var comparison = ignoreCase
-				? StringComparison.CurrentCultureIgnoreCase
-				: StringComparison.CurrentCulture;
-			
-			var key = keys.First( desc => desc.Equals(description, comparison) );
-			
-			if (key.Count() == 0)
-				throw new ArgumentException(string.Format("Requested description '{0}' was not found", description));
-			
-			return DescriptionToConstantMap[key];
+                if (constants.Count() == 0)
+                    throw new ArgumentException(string.Format(message, description));
+
+                return constants;
+            }
+            else
+            {
+                var map = DescriptionToConstantsMap;
+
+                if (!map.ContainsKey(description) || map[description].Count == 0)
+                    throw new ArgumentException(string.Format(message, description));
+
+                return map[description];
+            }            
 		}
 
+        /// <summary>
+		/// Finds all constants in the enumeration that have a description
+		/// matching <paramref name="description"/>.  If a constant has no description,
+		/// the constant's string value is used as its description.
+		/// </summary>
+		/// <param name="description"></param>		
+		/// <returns>
+		/// The constants in the enumeration that have a description
+		/// matching <paramref name="description"/>.
+		/// </returns>
+        public static IEnumerable<E> ParseDescription(string description)
+        {
+            return ParseDescription(description, false);
+        }
+
 		/// <summary>
-		/// Converts the string representation of the descriptions of an
-		/// enumerated constants to an equivalent enumerated object and returns a value that
-		/// indicates whether the conversion succeeded.
+        /// Finds all constants in the enumeration that have a description
+        /// matching <paramref name="description"/> and returns a value that
+		/// indicates whether any constants were founded.
 		/// </summary>
 		/// <param name="description">A string containing the description to convert.</param>
 		/// <param name="result">
-		/// When this method returns, <paramref name="result"/> contains the E value equivalent to
+		/// When this method returns, <paramref name="result"/> contains the enumerable of constants with
 		/// the description in <paramref name="description"/> if the conversion succeeded,
 		/// or null if the conversion failed.
 		/// </param>
@@ -792,7 +822,7 @@ namespace Dnum
 		/// True if the <paramref name="description"/> parameter was converted successfully;
 		/// otherwise, false.
 		/// </returns>
-		public static bool TryParseDescription(string description, out E? result, bool ignoreCase)
+		public static bool TryParseDescription(string description, out IEnumerable<E> result, bool ignoreCase)
 		{
 			try
 			{
@@ -801,27 +831,27 @@ namespace Dnum
 			}
 			catch
 			{
-				result = null;
+				result = Enumerable.Empty<E>();
 				return false;
 			}
 		}
-		
-		/// <summary>
-		/// Converts the string representation of the descriptions of an
-		/// enumerated constants to an equivalent enumerated object and returns a value that
-		/// indicates whether the conversion succeeded.
-		/// </summary>
-		/// <param name="description">A string containing the description to convert.</param>
-		/// <param name="result">
-		/// When this method returns, <paramref name="result"/> contains the E value equivalent to
-		/// the description in <paramref name="description"/> if the conversion succeeded,
-		/// or null if the conversion failed.
-		/// </param>
+
+        /// <summary>
+        /// Finds all constants in the enumeration that have a description
+        /// matching <paramref name="description"/> and returns a value that
+        /// indicates whether any constants were founded.
+        /// </summary>
+        /// <param name="description">A string containing the description to convert.</param>
+        /// <param name="result">
+        /// When this method returns, <paramref name="result"/> contains the enumerable of constants with
+        /// the description in <paramref name="description"/> if the conversion succeeded,
+        /// or null if the conversion failed.
+        /// </param>
 		/// <returns>
 		/// True if the <paramref name="description"/> parameter was converted successfully;
 		/// otherwise, false.
 		/// </returns>
-		public static bool TryParseDescription(string description, out E? result)
+		public static bool TryParseDescription(string description, out IEnumerable<E> result)
 		{
 			return TryParseDescription(description, out result, false);
 		}
