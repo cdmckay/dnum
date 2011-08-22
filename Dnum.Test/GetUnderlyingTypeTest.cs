@@ -1,29 +1,23 @@
-using System;
-using System.Linq;
-using Dnum;
 using NUnit.Framework;
 
-namespace Dnum.Test
-{
+namespace DigitalLiberationFront.Dnum.Test {
     [TestFixture]
-    public class GetUnderlyingTypeTest
-    {
+    public class GetUnderlyingTypeTest {
+
         enum Color { Red, Green, Blue, Yellow };
         enum PaperSize : short { Letter, Legal, A4 }
 
         [Test]
-        public void GetUnderlyingTypeOfIntEnum()
-        {
+        public void GetUnderlyingTypeOfIntEnum() {
             var type = Dnum<Color>.GetUnderlyingType();
-            Assert.AreEqual(typeof (int), type);
+            Assert.AreEqual(typeof(int), type);
         }
 
         [Test]
-        public void GetUnderlyingTypeOfShortEnum()
-        {
+        public void GetUnderlyingTypeOfShortEnum() {
             var type = Dnum<PaperSize>.GetUnderlyingType();
-            Assert.AreEqual(typeof (short), type);
-        }        
+            Assert.AreEqual(typeof(short), type);
+        }
 
     }
 }

@@ -1,69 +1,60 @@
 using System;
-using DotNet = System.ComponentModel;
-using Dnum;
 using NUnit.Framework;
 
-namespace Dnum.Test
-{
+namespace DigitalLiberationFront.Dnum.Test {
     [TestFixture]
-	public class GetDescriptionTest
-	{
-        enum Color
-        {
-            [DotNet.Description("Ruby Red")]
+    public class GetDescriptionTest {
+
+        enum Color {
+            [System.ComponentModel.Description("Ruby Red")]
             RubyRed,
 
-            [DotNet.Description("Emerald Green")]
+            [System.ComponentModel.Description("Emerald Green")]
             EmeraldGreen,
 
-            [DotNet.Description("Cobalt Blue")]
+            [System.ComponentModel.Description("Cobalt Blue")]
             CobaltBlue,
 
-            [DotNet.Description("Pee Yellow")]
+            [System.ComponentModel.Description("Pee Yellow")]
             PeeYellow
         };
 
-        enum Officer : byte
-        {
-            [DotNet.Description("Jean-Luc Picard")]
+        enum Officer : byte {
+            [System.ComponentModel.Description("Jean-Luc Picard")]
             Picard,
 
-            [DotNet.Description("William T. Riker")]
+            [System.ComponentModel.Description("William T. Riker")]
             Riker,
 
             Data,
 
-            [DotNet.Description("Worf, Son of Mogh")]
+            [System.ComponentModel.Description("Worf, Son of Mogh")]
             Worf,
 
-            [DotNet.Description("Geordi LaForge")]
+            [System.ComponentModel.Description("Geordi LaForge")]
             LaForge
         };
 
         [Test]
-        public void GetDescriptionWorksForIntegralValue()
-        {
+        public void GetDescriptionWorksForIntegralValue() {
             Assert.AreEqual("Pee Yellow", Dnum<Color>.GetDescription(3));
         }
 
         [Test]
-        public void GetDescriptionFallsBackOnEnumName()
-        {
+        public void GetDescriptionFallsBackOnEnumName() {
             Assert.AreEqual("Data", Dnum<Officer>.GetDescription(2));
         }
 
         [Test]
-        public void GetDescriptionDoesNotWorkForTooLargeIntegralValue()
-        {
+        public void GetDescriptionDoesNotWorkForTooLargeIntegralValue() {
             Assert.That(() => Dnum<Officer>.GetDescription(256), Throws.TypeOf<OverflowException>());
-        }		        
-		
+        }
+
         [Test]
-        public void GetNameWorksForConstantValue()
-        {
+        public void GetNameWorksForConstantValue() {
             Assert.AreEqual("Cobalt Blue", Dnum<Color>.GetDescription(Color.CobaltBlue));
             Assert.AreEqual("William T. Riker", Dnum<Officer>.GetDescription(Officer.Riker));
-        }	
-		
-	}
+        }
+
+    }
 }

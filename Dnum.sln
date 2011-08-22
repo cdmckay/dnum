@@ -1,10 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-# SharpDevelop 3.0.0.3800
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnum", "Dnum\Dnum.csproj", "{F2AA1C3B-6EB9-496E-A692-B5BFCDE0E1B0}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalLiberationFront.Dnum", "Dnum\DigitalLiberationFront.Dnum.csproj", "{F2AA1C3B-6EB9-496E-A692-B5BFCDE0E1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnum.Test", "Dnum.Test\Dnum.Test.csproj", "{64547CE0-1D27-4BC3-9DA3-39FDE47E8A1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalLiberationFront.Dnum.Test", "Dnum.Test\DigitalLiberationFront.Dnum.Test.csproj", "{64547CE0-1D27-4BC3-9DA3-39FDE47E8A1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
